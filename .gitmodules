@@ -1,0 +1,3 @@
+[submodule "mortgage-calculator"]
+	path = mortgage-calculator
+	url = https://github.com/tkach-tech/mortgage-calculator
