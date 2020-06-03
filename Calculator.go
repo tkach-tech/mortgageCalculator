@@ -2,7 +2,7 @@ package main
 
 import "math"
 
-func calculate(principalBorrowed float64, mortgageRate float64, years float64) float64 {
+func calculate(principalBorrowed, mortgageRate, years float64) float64 {
 	var n = countPayments(years)
 	var r = assumePayments(mortgageRate)
 

@@ -12,6 +12,7 @@ func main() {
 		mortgageRate      float64
 		principalBorrowed float64
 		years             float64
+		deposit           float64
 		typeOfCredit      int
 	)
 
@@ -31,13 +32,20 @@ func main() {
 	_, err = fmt.Scanf("%f", &years)
 	validate(err)
 
+	if typeOfCredit == 0 {
+		fmt.Println("Enter deposit: ")
+		_, err := fmt.Scanf("%f", &deposit)
+		validate(err)
+
+		principalBorrowed = subtractDeposit(deposit, principalBorrowed)
+	}
+
 	A := calculate(principalBorrowed, mortgageRate, years)
 
 	printResult(principalBorrowed, mortgageRate, years, A, typeOfCredit)
 }
 
-func printResult(principalBorrowed float64,
-	mortgageRate float64, years float64, A float64, typeOfCredit int) {
+func printResult(principalBorrowed, mortgageRate, years, A float64, typeOfCredit int) {
 
 	if typeOfCredit == 1 {
 		fmt.Printf("Monthly regular loan payment for $%.2f at an APR of ", principalBorrowed)
