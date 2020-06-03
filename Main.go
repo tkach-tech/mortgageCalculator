@@ -3,20 +3,25 @@
 
 package main
 
-import
-(
+import (
 	"fmt"
 )
 
 func main() {
 	var (
-		mortgageRate float64
+		mortgageRate      float64
 		principalBorrowed float64
-		years float64
+		years             float64
+		deposit           float64
+		typeOfCredit      int
 	)
 
+	fmt.Println("Choose a type of loan. If it is a mortgage enter 0, if a regular loan enter 1: ")
+	_, err := fmt.Scanf("%d", &typeOfCredit)
+	validate(err)
+
 	fmt.Println("Enter the principal owed ($): ")
-	_, err := fmt.Scanf("%f", &principalBorrowed)
+	_, err = fmt.Scanf("%f", &principalBorrowed)
 	validate(err)
 
 	fmt.Println("Enter the mortgage rate or APR (%): ")
@@ -27,14 +32,27 @@ func main() {
 	_, err = fmt.Scanf("%f", &years)
 	validate(err)
 
+	if typeOfCredit == 0 {
+		fmt.Println("Enter deposit: ")
+		_, err := fmt.Scanf("%f", &deposit)
+		validate(err)
+
+		principalBorrowed = subtractDeposit(deposit, principalBorrowed)
+	}
+
 	A := calculate(principalBorrowed, mortgageRate, years)
 
-	printResult(principalBorrowed, mortgageRate, years, A)
+	printResult(principalBorrowed, mortgageRate, years, A, typeOfCredit)
 }
 
-func printResult(principalBorrowed float64,
-	mortgageRate float64, years float64, A float64) {
-	fmt.Printf("Monthly mortgage payment for $%.2f at an APR of ", principalBorrowed)
+func printResult(principalBorrowed, mortgageRate, years, A float64, typeOfCredit int) {
+
+	if typeOfCredit == 1 {
+		fmt.Printf("Monthly regular loan payment for $%.2f at an APR of ", principalBorrowed)
+	} else {
+		fmt.Printf("Monthly mortgage payment for $%.2f at an APR of ", principalBorrowed)
+	}
+
 	fmt.Printf("%.2f%% over %.0f years:\n", mortgageRate, years)
 	fmt.Printf("$%.2f \n", A)
 }
